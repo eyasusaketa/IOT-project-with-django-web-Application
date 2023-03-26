@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="background.jpg" type="image/icon type">
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="http://cdn.pydata.org/bokeh/release/bokeh-1.4.0.min.css"/>
+    <link rel="stylesheet" type="text/css" href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.4.0.min.css"/>
+    <link rel="stylesheet" type="text/css" href="http://cdn.pydata.org/bokeh/release/bokeh-tables-1.4.0.min.css"/>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+  <div class="search">
+        <form action={% url 'custom' 120 %} method="get">
+            {% csrf_token %}
+           <input class="sp" type="search" name="dat" placeholder="Search by date">
+           <input class="bu"  type="submit" value="Search" placeholder="Search">
+        </form>
+    </div>
+
+<div id='tit'><p class="tit" >Green House Dashboard</p></div>
+<div class="datas1"   >
+<ul class="nav">
+    <li class="navlist"  onclick="openCity(event, 'temperature')">Graph of Temperature</li>
+    <li class="navlist"  onclick="openCity(event, 'humidity')">Graph of Humidity</li>
+    <li class="navlist"  onclick="openCity(event, 'moisture')">Graph of Soil Moisture</li>
+    <li class="navlist"  onclick="openCity(event, 'co2')">Graph of CO2 Cocentration</li>
+    <li class="navlist"  onclick="openCity(event, 'light')">Graph of Light Intensity</li>
+</ul>
+    <input onclick="openCity(event, 'controller')" class="databutton" type="button" value="Controllers data" >
+<div  class="photo col-6">
+</div>
+</div>
+  <div class="main">
+  <div class="circle">
+  O
+  </div>
+</div>
+
+<div class="bar">
+  {{ day }}
+</div>
+
+<div id='temperature' class="align-right" >
+     {{ tempe | safe }}
+</div>
+<div id='humidity' class="align-right" >
+     {{ humidity | safe }}
+</div>
+<div id='moisture' class="align-right" >
+     {{ moisture | safe }}
+</div>
+<div id='co2' class="align-right" >
+     {{ co2 | safe }}
+</div>
+<div id='light' class="align-right" >
+     {{ light | safe }}
+</div>
+
+<div id='controller' class="align-right" >
+<table>
+    <tr>
+        <th>Device Name</th>
+        <th>Start Time</th>
+        <th>Stop Time</th>
+    </tr>
+</table>
+</div>
+
+
+
+<div class="extreme">
+    <table>
+    <tr id="tr">
+        <th>Variables</th>
+        <th>Low </th>
+        <th>High</th>
+
+    </tr><br>
+    <tr id="td">
+        <td>Temperature</td>
+        <td>{{ mt }}</td>
+        <td>{{ Mt }}</td>
+    </tr>
+    <tr id="td">
+        <td>At</td>
+        <td>{{ mtt }}</td>
+        <td>{{ Mtt }}</td>
+    </tr>
+    <tr id="td">
+        <td>Humidity</td>
+        <td>{{ mh }}</td>
+        <td>{{ Mh }}</td>
+
+    </tr>
+    <tr id="td">
+        <td>At</td>
+        <td>{{ mht }}</td>
+        <td>{{ Mht }}</td>
+    </tr>
+    <tr id="td">
+        <td>Soil Moisture</td>
+        <td>{{ mm }}</td>
+        <td>{{ Mm }}</td>
+
+    </tr>
+    <tr id="td">
+        <td>At</td>
+        <td>{{ mmt }}</td>
+        <td>{{ Mmt }}</td>
+    </tr>
+    <tr id="td">
+        <td>Light Intensity</td>
+        <td>{{ ml }}</td>
+        <td>{{ Ml }}</td>
+
+    </tr>
+    <tr id="td">
+        <td>At</td>
+        <td>{{ mlt }}</td>
+        <td>{{ Mlt }}</td>
+    </tr>
+    <tr id="td">
+        <td>Co2 concentration</td>
+        <td>{{ cm }}</td>
+        <td>{{ cM }}</td>
+    </tr>
+    <tr id="td">
+        <td>At</td>
+        <td>{{ mct }}</td>
+         <td>{{ Mct }}</td>
+    </tr>
+    </table>
+
+</div>
+
+</body>
+    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-1.4.0.min.js"></script>
+    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.4.0.min.js"></script>
+    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-tables-1.4.0.min.js"></script>
+    <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-api-1.4.0.min.js"></script>
+<script type="text/javascript" src="javs.js"></script>
+    {{ tempes | safe}}
+    {{ humiditys | safe}}
+    {{ moistures | safe}}
+    {{ co2s | safe}}
+    {{ lights | safe}}
+<script>
+    function openCity(evt, cityName)
+    {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("align-right");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("navlist");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+    }
+</script>
+</html>
